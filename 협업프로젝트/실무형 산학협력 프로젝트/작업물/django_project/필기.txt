@@ -1,0 +1,132 @@
+0. 설치 및 앱 생성
+- 장고설치, startproject, startapp (fcuser, order, product)
+- myvenv\Scripts\activate
+- cd DDaDDaSang
+
+1. model 각각 지정
+- order의 경우 데이터베이스 배운거처럼 fcuser,product를 외래키로 사용한다! 
+- def __str__(self) 주의 : https://comdoc.tistory.com/entry/7-Django-ORM-Method-strE
+- startapp으로 만든 app들 setting 추가
+- migration과정 두번 : python manage.py makemigrations, python manage.py migrate
+* 클래스 수정경우 항상 migrate 주의 : OperationalError: no such table 이런오류 뜨면 migrate 고고
+
+2. 만든 앱을 관리자 페이지와 연결
+- admin.py : import Fcuser, list 넣을때 , 주의 
+- 각 앱별로 admin.py 건드려준후, python manage.py createsuperuser (관리자페이지를 관리할 관리자 계정 생성)
+- 관리자 페이지 접속 : python manage.py runserver
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+0. 회원가입 후 홈페이지 이동 위한 index.html 과 view 설정해주기
+- view.py로 index 연결 만들기
+- fcuser - 폴더생성 : templates - 파일생성 : index.html & base.html & register.html
+- base 설정 : 부트스트랩 적용, index 설정
+1. url 연결
+- fc_django - fc_django - url 추가
+- fcuser에서안하는건 이건 홈페이지니까 fcuser밑일 필요가 없어서! (다만 위에 임포트는 잘해주고)
+2. forms.py 파일만들고 입력
+- from django import forms : 이것도 장고에서 지원하는 폼이 있는걸 이용하기 위함일듯아마
+- def clean 통해서 회원가입시 비밀번호, 비밀번호 확인이 서로 틀리지않게 해주는 기능 추가
+- clean의 else 에서 회원가입 과정 진행!! (데이터베이스 넣는 과정임 이게 ★ 별건아니지만 기초에서 이해못했었으므로 주의!)
+- make_password는 비번을 그대로가 아닌 암호화해서 관리자사이트에서 확인하겠다는 기능임 (위에 임포트 주의)
+
+3. views.py
+- 지금까지는 def로 연결했다면 실전편에서는 class로 한다! 상속을 통해 작성하기도 앞으로 훨씬 유용하므로!
+- 이렇게 class 기능사용하기위해 Formview라는것을 임포트하고, 그 중에서도 회원가입폼으로 RegisterForm이 있음
+- register.html 만들어놓기 , forms.py 건들기 -> views.py의 RegisterView, template_name = 'register.html' 로 연결, url 연결하기
+register.html에다가
+{% extends "base.html" %}
+{% block contents %}
+Register {{ form }}
+{% endblock %}    -> ~~/register 로 연결하면 '이메일:       비밀번호:        비밀번호확인:      ' 이런식으로 뜨게됨.
+4. 모양을 더 갖추기위해 기본편 로그인에서 한거 html 복붙. 명칭만 변경
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ로그인 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+뷰 클래스 추가 - form설정 -  login.html - url추가
+1. views.py : register와 마찬가지로 class LoginView(FormView)
+2. forms.py : LoginView에서 설정한 form_class = LoginForm 에 맞게 동일명으로 forms.py에 class 생성
+    - check_password 는 비밀번호가 입력한것과 db것과 맞는지 비교해주는 내장기능
+3. login.html : register.html 복붙해서 생성, 이름만 바꾸기
+4. url 추가 : fcuser 밑으로 갈 필요가 없기때문에 fc_django에서만 한번 설정해준다
+5. session기능추가 
+    - view : session 함수추가
+    - index.html : session 받도록 html 내 표기 추가 {{ email }}
+    - session 함수 -> html 되도록 다시 view에  return render(request, 'index.html', {'email': request.session.get('user')}) 추가! 
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ상품 상세목록 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+1. product - view : Listview통한 class생성 (마찬가지로 여기서도 template_name 으로 연결!)
+2. url 추가 : 마찬가지로 그냥 fc_django에서만
+3. product.html 만들기 : base.html 은 setting 그 설정 되어있어서 하나만 있으면 된다고 함! 
+    - product.html : 
+        {% for product in object_list %} : model에서 생성한 클래스의 변수 리스트에 대해서! 라는 의미
+        {{ product.name }} : {{ product.price }} : 화면구성을 'name : price' 이런식으로 하겠다는것
+        {% endfor %}  
+    * 만일여기서, object_list라는 말이 어색하고 싫다면 view에서 context_object_name이란걸 이용해서 변경가능
+4. product_html에다가 데이터베이스에 저장된 것들 표로 표현해주기
+    - <table class="table table-light">
+    - {% for product in product_list %} 
+    - <th>{{ product.name }}</th> 이런식으로 이용하는건데
+    - 원리 : product.html [연결 : context_object_name = 'product_list' ] -> view의 class 
+      [연결 : model = Product ] -> model의 class 이런식으로 연결이 되는거임-
+4-2. humanize를 통해 양식적용하기
+    - setting에 들어가서 installed app에 humanize를 추가
+    - 가격, 등록날짜 부분에 양식지정완료
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ상품 등록창 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+1. register_product.html 만들기
+    - if else 통해서 상품설명 부분 (decription) 은 input 태그가 아닌 textarea 태그 이용
+    - class 에 form - control 사용 (부트스트랩 관련인거같은데 모양새 틀에 맞게 맞춰주는 기능인듯)
+2. view에서 class 만들어주기
+3. forms.py 생성 후 입력
+4. url 연결
+5. register_product.html 중 상품설명 작성시 에디터 이용하기
+    - 구글 summernote 검색 -> 공홈 -> 좌측하단 easy to install -> 부트스트랩 위한거 스크롤 내려서 찾기 -> 부분 복사
+    - 사용위해 base에 블록 하나 더 추가 ㅇㅇ
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ상품 상세보기창 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+0. 여기서는 forms.py 필요하지않음. 그냥 있는정보를 활용하는거니까
+1. views.py 에 class ProductDetail(DetailView)
+2. product_detail.html 만들기 
+3. url
+    - path('product/<int:pk>/', ProductDetail.as_view())
+    -> 어떤 글이냐에 따라 url에 끝에 /1/ /2/ 이런식으로 번호매겨서 연결하는 방식임!
+4. product_detail.html 
+    - 부트스트랩의 카드라는걸 이용해서 상세보기 페이지 틀 만들기
+    - 하단에 다시 상세보기 -> 글 목록 넘어갈수있도록 href 추가해주고
+    - 마찬가지로 일반 상품목록에서도 상품명누르면 상품목록 -> 상세보기 넘어갈수있도록 href 추가해준다
+** {{ product.id }} 에서 id란 ? : 글 등록번호로서, 데이터베이스의 primary key로 작용하는거인듯함!!!
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ상세보기창에서 '주문하기' 만들기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+1. order - forms.py
+    - 사용자가 누군지에 대한 id정보는 세션에서 갖고오기땜에 폼에서 만들필요가 없다 (로그인한 사용자가 자동으로 넘어가야하니까)
+    - 상품정보(상품설명)는 그냥 거기서 누르는거니까 바로 넘어가야함 widget=forms.HiddenInput
+    - 사용자한테 따로 보여지지 않는다 : 히든인풋 : html에서 조건문으로 구현시켜주는듯(위젯만으로는 안되나?)
+2. html 
+    - <form method="POST" action="/order/create/">
+    - 그냥 action = "."이면 그 위치인데 이거는 오더 크리에이트 사이트로 넘겨준다의미
+    - 긍까 '주문하기'버튼을 누름으로써 그 정보가 현 사이트가 아닌 오더크리에이트로 그 정보가 넘어간단것!
+    -> 여기까지 하면 화면에 '주문하기' 버튼만 뜸. 폼 내용을 전달받아서 '수량'정보가 안뜸
+3. form -> html 정보 주기위해서 views.py에 def 추가
+- 디테일뷰가자동으로 전달해주는 데이터를 만들고 나서 거기에 내가 원하는 데이터를 추가하는 방식
+- 다른 app인 order의 form을 갖고오는거라 import 별도 신경써줘야함 
+4. 오더크리에이트 이 주소에 해당하는 form view가 필요함 : order 앱 이동
+- 화면은 상세보기 페이지에 있기때문에 지금 화면이 필요한게 아님! : 탬플릿 네임은 필요없다
+- 성공하면 상품리스트로 이동시켜주기위해 success_url = '/product/'해주자
+- url 추가
+5. 주문하기를 통해 값 넘겨주면서 데이터를 저장해야 하니까 forms.py에 def clean(self)
+
+이제 form에서 로그인한 사용자에 대해 세션처리하는부분임
+강의 바로 시작하지말고 이거 정리한거 읽고 시작하기!!!!!!!!!!!!!
+_________
+5월 22일
+1. 프로젝트에 이미 저장되어져 있는 파일, 개발할 때 이미 준비되어진 파일 = "Static"
+
+2. 웹 서비스 이용자들이 업로드하는 파일 = "Media"
+
+4가지 방법으로 데이터를 다루는 방법 rest admin.py
+1. delete 삭제
+2. put --> update
+3. post --> create
+4. get 가져오기 데이터를 긁어오겠다
+총 4가지의 검색 방식을 통해 가져 오는것 
+
+

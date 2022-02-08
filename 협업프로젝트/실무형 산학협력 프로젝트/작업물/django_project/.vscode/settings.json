@@ -1,0 +1,4 @@
+{
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "fcdjango_venv\\Scripts\\python.exe"
+}

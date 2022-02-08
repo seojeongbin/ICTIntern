@@ -1,0 +1,116 @@
+{% extends "base.html"%}
+{% block contents %}
+{%load static %}
+{% comment %} 헤더 추가시 {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+<header id="header_index" style="background-color: #fff; border-bottom: 1px solid #ddd;">
+  <div id="h_in">
+    <div class="logo"><a href="/"><img src="{%static 'img/logo.png' %}" alt=""></a></div>
+    <ul class="menu">
+      <li class="m1" onclick="location.href='/changeurl/show/'">상세페이지 만들기</li>
+      <li class="m2" onclick="location.href='/changeurl/analyze'">마케팅 페이지</li>
+    </ul>
+    <ul class="tnb">
+      <li onclick="location.href='/before/'">로그인</li>
+      <li onclick="location.href='/users/agreement/'">회원가입</li>
+      <li>고객센터</li>
+    </ul>
+  </div>
+</header>
+<!------------------------------------------------------------------------------------------------>
+<div class="container">
+  <div class = "row">
+
+    <div class="col-md-6">
+      <div class="row mt-5">
+        <h3> 링크를 기입해주세요 </h3>
+      </div>
+
+      <label for="geturl">url 입력</label>
+      <form method='POST' , action='.' enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="url" class="form-control" id="get_url" placeholder="enter the url exactly" name="get_url" />
+          <div class="row mt-3">
+            {{ form.site }}
+          </div>
+          <button type="submit" class="btn btn-primary row mt-3">변환</button>
+          <div class="row mt-5">
+            <input name="input_image" type='file' onchange="readURL(this);" />
+            <div>
+              <img id="blah" width=200px height=200px src="#" alt="이미지 미리보기" />
+            </div>
+      </form>
+    </div>
+  
+
+<!---------------------------------------------------------------->
+
+    <div class="col-md-6">
+      <div class="row mt-5">
+        <h3> 다운로드 받기 </h3>
+      </div>
+
+      <form method='POST' , action='.'>
+        {% csrf_token%}
+        <div class="form-group">
+            <div class="row mt-3">
+                <body>
+                    {% for post in file %}
+                    <h4>{{post.title}}</h4>
+                    <a class="btn btn-primary" href="{{post.adminupload.url}}" download="{{post.adminupload.url}}">Download</a>
+                    {% endfor %}                
+                </body>
+            </div>
+            <div class="row mt-3">
+              <div class="col-3">
+                <button onClick="location.href='/'" class="btn btn-primary row mt-3">home</button>
+              </div>
+            </div>
+            <!-- <div class="row mt-5">
+                <figure class="figure">
+                    <img src="{{ input_image }}" class="figure-img img-fluid rounded" alt="...">
+                    <figcaption class="figure-caption">미리보기</figcaption>
+                </figure>
+            </div> -->
+        </div>    
+      </form>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------------------------>
+
+  
+
+
+<!-- 미리보기 구현을 위한 자바스크립트로 작성된 함수-->
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#blah').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+<style>
+  #get_url {
+    width: 250px;
+    height: 30px;
+  }
+</style>
+
+<footer id="index_footer" style="margin-top :30px">
+	<div class="f_in">
+		<div class="f_left">
+			<p class="f_addr">부산 금정구 금정로 2255층<br>
+				Tel. 070-4108-1119 Fax. 050-4005-1119 E-mail. wogh1759@naver.com Phone. 010-8466-0006
+			<p class="f_copy">Copyright © semicolons.co.kr All rights reserved.</p>
+		</div>
+
+</footer>
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html"%}
+{% block contents %}
+{% load static %}
+{% comment %} 헤더 추가시 {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+<header id="header_index" style="background-color: #fff; border-bottom: 1px solid #ddd;">
+	<div id="h_in">
+		<div class="logo"><a href="/"><img src="{%static 'img/logo.png' %}" alt=""></a></div>
+		<ul class="menu">
+			<li class="m1" onclick="location.href='/changeurl/show/'">상세페이지 만들기</li>
+			<li class="m2" onclick="location.href='/changeurl/analyze'">마케팅 페이지</li>
+		</ul>
+		<ul class="tnb">
+			<li onclick="location.href='/before/'">로그인</li>
+			<li onclick="location.href='/users/agreement/'">회원가입</li>
+			<li>고객센터</li>
+		</ul>
+	</div>
+</header>
+<div class="container">
+	<form action='.' ,method="GET" style="text-align:center ; padding-top:30px">
+		<input name="q" placeholder="검색 키워드">
+		<input type="submit" value="검색">
+	</form>
+	■ 총 검색 개수: {{input}} 개
+	<br>
+	<br>
+	{% for item in items %}
+
+
+	<ul style="background-color: #ebddc3">
+
+
+		<p style="color:black ; font-weight: bold; font-size:17px; padding-top:10px"> ■ 페이지 {{forloop.counter}}위</p>
+		<div style="padding-left:10px ; padding-right:10px; padding-top:15px"><!-- {{ forloop.counter}}. -->
+			<img src="{{item.image}}" alt="" width="150" height="150"> <span
+				style="font-size:19px; margin-left: 10px">{{ item.title|safe }}</span> <br>
+			<div style="margin-top:20px">
+				- 최저가 : {{item.lprice}}원 , 카테고리: {{item.category1}} > {{item.category2}} > {{item.category3}} <br>
+				- 구매 링크: <a href="{{ item.link }}">{{ item.link }}</a> <br>
+				- 브랜드 : {{item.brand}}
+			</div>
+		</div>
+		<br>
+		<br>
+
+	</ul>
+	{% endfor %}
+
+</div>
+</div>
+
+<footer id="index_footer" style="margin-top :30px">
+	<div class="f_in">
+		<div class="f_left">
+			<p class="f_addr">부산 금정구 금정로 2255층<br>
+				Tel. 070-4108-1119 Fax. 050-4005-1119 E-mail. wogh1759@naver.com Phone. 010-8466-0006
+			<p class="f_copy">Copyright © semicolons.co.kr All rights reserved.</p>
+		</div>
+
+</footer>
+
+{% endblock %}

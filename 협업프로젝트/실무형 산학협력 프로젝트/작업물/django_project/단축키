@@ -1,0 +1,21 @@
+ctrl + w : 창닫기
+
+ctrl + teb : 창 이동
+
+ctrl + k + ctrl + t : vscode 색 바꾸기
+
+ctrl + / : 주석 달기
+
+ctrl + shift + enter : 윗줄 엔터
+
+ctrl + enter : 아랫줄 엔터
+
+ctrl + shift + k : 라인 삭제
+
+shift + alt + 위 : 해당 라인 위로 복사
+shift + alt + 아래 : 해당 라인 아래로 복사
+
+crtl + shift + f : 프로젝트 전체에서 검색
+
+html에서 
+ctrl + a, ctrl + k + f : 모든 라인 정렬

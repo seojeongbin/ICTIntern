@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+{% block contents %}
+<div class="row mt-5">
+    <h1> Ready to download </h1>
+</div>
+
+<form method='POST' , action='.'>
+    {% csrf_token%}
+    <div class="form-group">
+
+     
+     <div class="row mt-5">
+        <figure class="figure">
+          <img src="{{ input_image.url }}" class="figure-img img-fluid rounded" alt="...">
+          <figcaption class="figure-caption">A caption for the above image.</figcaption>
+        </figure>
+      </div>
+        <button type="submit" class="btn btn-primary">저장</button>
+    </div>
+</form>
+
+{% endblock %}

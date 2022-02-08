@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>산학협력 프로젝트</title>
+        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#contents").load("test.html");
+                $("#leftDiv").DataTable({
+                    fixedHeader: true
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            document.execCommand('styleWithCSS', false, true);
+            document.execCommand('insertBrOnReturn', false, true);
+            $(document).ready(function() {
+                    $(".css_test span, b").focus();
+                    $('button').click(function(){
+                    document.execCommand($(this).attr('id'), false, true);
+                });
+                $('select').change(function(){
+                    document.execCommand($(this).attr('id'), false, $(this).val());
+                });
+            });
+        </script>
+    </head>
+    <link rel="stylesheet" href="topmenu.css">
+    <style>
+        .all {
+            padding-top: 10px;
+            width: 100%;
+            float: left;
+        }
+        .left {
+            width: 30%;
+            float: left;
+        }
+        .right {
+            width: 70%;
+            float: left;
+        }
+        .contents {
+            padding: 30px;
+            width:900px;
+            height: fit-content;
+        }
+        #upload {
+            width: 50%;
+            font-size: 20px;
+            color: white;
+            font-weight: 100;
+            border: none;
+            background-color: #1b265b;
+            padding: 5px;
+        }
+        #draggable {
+            width: 150px;
+            height: 150px;
+            padding: 0.5em;
+        }
+        #images {
+            padding-top: 50px;
+        }
+        #text {
+            -moz-appearance: textfield-multiline;
+            -webkit-appearance: textarea;
+            font: medium -moz-fixed;
+            font: -webkit-small-control;
+            overflow: auto;
+            padding: 2px;
+            resize: both;
+        }
+        #selectAll, #bold, #italic, #underLine, #justifyLeft, #justifyCenter, #justifyRight {
+            width: 20%;
+            height: 40px;
+            margin: 3px;
+            background-color: #1b265b;
+            color: white;
+            border: none;
+        }
+        #selectAll:hover, #bold:hover, #italic:hover, #underLine:hover, #justifyLeft:hover, #justifyCenter:hover, #justifyRight:hover {
+            background-color: white;
+            color: #1b265b;
+            font-weight: bold;
+        }
+        div#leftDiv.left {
+            position: sticky;
+        }
+        #contents {
+            position: relative;
+        }
+    </style>
+    <body>
+        <header>
+            <nav class="topMenu" id="topMenu">
+                <div id="mainmenu">
+                    <a href="mainInterface.html"><button id="logo">로고</button></a>
+                </div>
+                <div id="mainevent">
+                    <a href="detailedPage.html"><button id="menu1">상세페이지 만들기</button></a>
+                    | <a href=""><button id="menu1">마케팅 페이지</button></a>
+                </div>
+                <div id="subevent">
+                    <a href=""><button id="menu2">로그인</button></a>
+                    <a href=""><button id="menu2">회원가입</button></a>
+                    <a href=""><button id="menu2">고객센터</button></a>
+                </div>                
+            </nav>
+        </header>
+        <main>
+            <div class="all">
+                <div class="left" id="leftDiv">
+                    url 입력 <input type="text" placeholder="https:~" id="inputURL"><br><br>
+                    사진 입력 <input type="file" id="inputIMG"><br><br>
+                    <button id="upload">업로드</button>
+                    <div id="images">
+                        <img src="1.jpg" width="100" height="100" id="imgfile"></img>
+                        <img src="2.jpg" width="100" height="100" id="imgfile"></img>
+                        <img src="3.jpg" width="100" height="100" id="imgfile"></img>
+                    </div>
+                    <div class="txtedit" id="textedit">
+                        <button id="bold">굵게</button>
+                        <button id="italic">기울임</button>
+                        <button id="underLine">밑줄</button>
+                        <br>
+                        <button id="justifyLeft">왼쪽정렬</button>
+                        <button id="justifyCenter">가운데정렬</button>
+                        <button id="justifyRight">오른쪽정렬</button>
+                        <br>
+                        <select id="fontSize" width="50px">
+                            <option value="">글자 크기</option>
+                            <option value="1">4px</option>
+                            <option value="2">8px</option>
+                            <option value="3">10px</option>
+                            <option value="4">12px</option>
+                            <option value="5">16px</option>
+                            <option value="6">20px</option>
+                            <option value="7">30px</option>
+                        </select>
+                        <select id="foreColor" width="50px">
+                            <option value="">글자 색깔</option>
+                            <option value="#fff">하양</option>
+                            <option value="#f00">빨강</option>
+                            <option value="#00f">파랑</option>
+                            <option value="#0f0">초록</option>
+                            <option value="#ffff00">노랑</option>
+                            <option value="#000">검정</option>
+                        </select>
+                        <select id="hiliteColor" width="50px">
+                            <option value="">글자 배경색</option>
+                            <option value="#fff">하양</option>
+                            <option value="#f00">빨강</option>
+                            <option value="#00f">파랑</option>
+                            <option value="#0f0">초록</option>
+                            <option value="#ffff00">노랑</option>
+                            <option value="#000">검정</option>
+                        </select>
+                        <br><br>
+                    </div>
+                    <br><br>
+                </div>
+                <div class="right" id="rightDiv">
+                    <div class="contents" id="contents" style="border: 3px solid black;"></div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

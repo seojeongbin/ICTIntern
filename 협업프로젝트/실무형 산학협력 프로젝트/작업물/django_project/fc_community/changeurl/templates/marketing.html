@@ -1,0 +1,83 @@
+{% extends "base.html"%}
+{% block contents %}
+{% load static %}
+{% comment %} 헤더 추가시 {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+<header id="header_index" style="background-color: #fff; border-bottom: 1px solid #ddd;">
+	<div id="h_in">
+		<div class="logo"><a href="/"><img src="{%static 'img/logo.png' %}" alt=""></a></div>
+		<ul class="menu">
+			<li class="m1" onclick="location.href='/changeurl/show/'">상세페이지 만들기</li>
+			<li class="m2" onclick="location.href='/changeurl/analyze'">마케팅 페이지</li>
+		</ul>
+		<ul class="tnb">
+			<li onclick="location.href='/before/'">로그인</li>
+			<li onclick="location.href='/users/agreement/'">회원가입</li>
+			<li>고객센터</li>
+		</ul>
+	</div>
+</header>
+
+<div class="container">
+  <form action='.' ,method="GET" style="text-align:center ; padding-top:30px">
+    <input name="q" placeholder="검색할 키워드를 입력하세요: ">
+    <input type="submit" value="분석">
+    
+    
+    <div class="recommend_content">
+
+    <p> 추천 카테고리</p> 
+    
+    
+    <P> 추천 상품명 </P>
+    
+    {{recommend_keyword}}
+    <p> 추천 검색태그 </p> {}
+
+
+</div>
+
+<div class ="detail_content"> 
+    <div> <h3>상품명 단어</h3>
+            <p> 네이버 쇼핑에서 {키워드}로 검색시 상위 페이지 안에서 상품명에 가장 많이 사용된 단어 순위입니다 (상위1~40위)</p>
+           1. {내용}
+    </div>
+    <div>
+        <h3>태그 단어</h3>
+        <p> 네이버 쇼핑에서 {키워드} 로 검색시 상위 2페이지 안에서 상품태그에 가장 많이 사용된 단어 순위입니다(상위1 ~40위)</p> 
+           1.  {내용}
+    </div>
+    <div>
+        <h3> 카테고리</h3>
+        <p> 네이버 쇼핑에서 {키워드} 로 검색시 상위 노출되는 카테고리입니다.</p>
+
+            {내용}
+    </div>
+    <div>
+        <h3>연관 검색어</h3>
+        <p> 네이버 쇼핑에서 {키워드} 로 검색시 검색창에 제공되는 연관검색어입니다.</p> 
+            1. {내용}
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer id="index_footer" style="margin-top :30px">
+	<div class="f_in">
+		<div class="f_left">
+			<p class="f_addr">부산 금정구 금정로 2255층<br>
+				Tel. 070-4108-1119 Fax. 050-4005-1119 E-mail. wogh1759@naver.com Phone. 010-8466-0006
+			<p class="f_copy">Copyright © semicolons.co.kr All rights reserved.</p>
+		</div>
+
+</footer>
+
+{% endblock %}
+

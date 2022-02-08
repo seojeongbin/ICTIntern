@@ -1,0 +1,12 @@
+산프 중간고사 힌트
+
+1. 한꺼번에 여러값을 삽입할수있는 리스트 함수
+
+insertMulti(넣고싶은 여러개를 배열로 정의 : ps, 넣을곳)
+	for i in range(0, len(ps)):
+		insertAfter 각각 돌림
+
+2. 두개의 리스트를 하나로 연결
+Merge(A,B):
+	A.setNext(B)
+	B.setprev(A) 머 이런식으로 ㅇㅇ

@@ -1,0 +1,32 @@
+<!-- 홈에 아무것도 없다가 파일을 업로드하면 보임 -->
+
+{% extends "base.html"%}
+{% block contents %}
+<div class="row mt-5">
+    <h1> Ready to download </h1>
+</div>
+
+<form method='POST' , action='.'>
+    {% csrf_token%}
+    <div class="form-group">
+        <div class="row mt-5">
+            <body>
+                {% for post in file %}
+                <h4>{{post.title}}</h4>
+                <a class="btn btn-primary" href="{{post.adminupload.url}}" download="{{post.adminupload.url}}">Download</a>
+                {% endfor %}                
+            </body>
+        </div>
+        <div class="row mt-5">
+            <a class="btn btn-primary" onClick="location.href='/'">Home</a>
+        </div>
+        <div class="row mt-5">
+            <figure class="figure">
+                <img src="{{ input_image }}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">미리보기</figcaption>
+            </figure>
+        </div>
+    </div>    
+</form>
+
+{% endblock %}
