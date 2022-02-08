@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+<!-- 상품설명 글 작성과정 : summernote 이용-->
+<!-- 밑에 scripts 태그 쪽은 크기같은 인자값 주는 부분. 가운데에는 '#id_적용되는 클래스 변수명'-->
+{% block header %} 
+<!--summernote 사용하기-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<script> 
+    $(document).ready(function () {
+        $('#id_description').summernote({  
+        height: 300
+        }); 
+    });
+</script>
+{% endblock %}
+<!-- head부분 끝 -->
+<!-- body 시작 : 상품설명 글 작성과정--> 
+{% block contents %} 
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1 style="font-weight: bold;">강의실 등록하기</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        {{ error }}
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action=".">
+        {% csrf_token %} <!-- 다른데서 호출 막는기능 : 크롤링 등-->
+        {% for field in form %}
+        <div class="form-group">
+            <label style="font-weight: bold;" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% ifequal field.name 'description' %} 
+            <!-- forms.py에서 하나씩 꺼내다가 description인 경우에는 input 태그가 아닌 textarea 쓰겠단 의미 : 상품설명 부분은 일반 입력이 아닌 텍스트 입력으로 받겠다는 의미-->
+            <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"></textarea>
+            {% else %}
+            <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+            placeholder="{{ field.label }}" name="{{ field.name }}" />
+            {% endifequal %}
+        </div>
+        {% if field.errors %}
+        <span style="color: red">{{ field.errors }}</span>
+        {% endif %}
+        {% endfor %}
+        <button style="font-weight: bold;" type="submit" class="btn btn-primary">등록</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

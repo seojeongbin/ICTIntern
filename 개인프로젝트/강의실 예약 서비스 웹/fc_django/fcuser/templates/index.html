@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block contents %}
+{% load static %}
+
+<!-- 부트스트랩 이미지 슬라이드를 사용하기 위한 설정-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'css.css'%}"> <!-- css 적용하기!! -->
+
+<div class="row mt-5">
+    <div class = "col-12 text-center">
+        {% if request.session.user %}
+        <h1 style="font-family: 'Do Hyeon', sans-serif;" class="font" style="font-weight: bold;">"{{ email }}"님을 위한 강의실 예약시스템</h1>
+        <h4 style="font-family: 'Do Hyeon', sans-serif; color:#63a4ff" class="font" style="font-weight: bold;">< 구해줘! 룸즈 ></h4>        
+        {% else %}
+        <h1 style="font-family: 'Do Hyeon', sans-serif;" class="font" style="font-weight: bold;">강의실 예약 시스템</h1>
+        <h4 style="font-family: 'Do Hyeon', sans-serif; color:#63a4ff" class="font" style="font-weight: bold;">< 구해줘! 룸즈 ></h4>
+        {% endif %}
+    </div>  
+</div> 
+
+<div class="row mt-5">
+<div class="row">
+    <div class="col-sm-6">
+        <!-- <img src="{% static '산업공학과.png' %}" class="img-fluid img-thumbnail" onClick="location.href='http://www.ie.pusan.ac.kr/ie/index..do'" alt="..."> -->
+        <!-- 이미지 슬라이드 삽입 시작-->
+        <!-- 몸통부분-->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- 안에 들어갈 이미지 부분 -->
+            <div class="carousel-inner">
+
+                <div class="item active">
+                    <img src="{% static '산업공학과.png' %}" onClick="location.href='http://www.ie.pusan.ac.kr/ie/index..do'" alt="Los Angeles" style="width:100%;" >
+                    <div class="carousel-caption">
+                        <h3 style="font-family: 'Do Hyeon', sans-serif;" class="font" style="font-weight: bold;">구해줘! 룸즈</h3>
+                        <p>똑똑한 강의실 예약시스템</p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="{% static '사진2.png' %}" onClick="location.href='http://www.ie.pusan.ac.kr/ie/index..do'" alt="Chicago" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3 style="font-family: 'Do Hyeon', sans-serif;" class="font" style="font-weight: bold;">구해줘! 룸즈</h3>
+                        <p>똑똑한 강의실 예약시스템</p>
+                    </div>
+                </div>
+        
+                <div class="item">
+                    <img src="{% static '사진3.png' %}" onClick="location.href='http://www.ie.pusan.ac.kr/ie/index..do'" alt="New York" style="width:100%;">
+                    <div class="carousel-caption">
+                        <h3 style="font-family: 'Do Hyeon', sans-serif;" class="font" style="font-weight: bold;">구해줘! 룸즈</h3>
+                        <p>똑똑한 강의실 예약시스템</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 좌우 클릭 -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    
+    
+    </div>
+    <div class="col-sm-6">
+        <div class="row mt-5">
+            <div class="col-12">
+                {% if request.session.user %} 
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onClick="location.href='/logout/'">로그아웃</button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onclick="location.href='/product/'">강의실 이용하기</button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onclick="location.href='/order/'">나의 예약현황</button>
+                </div> 
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onclick="location.href='/product/create/'">등록하기<span class="badge rounded-pill bg-light text-dark">조교님 전용</span></button>
+                </div> 
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onclick="location.href='https://e-onestop.pusan.ac.kr/menu/class/C06/C06004?menuId=2000030704&rMenu=03'">강의실 시간표 조회</button>
+                </div>         
+                {% else %}
+                <div class="form-group"> 
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onClick="location.href='/login/'">로그인</button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" onClick="location.href='/users/agreement/'">회원가입</button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" title = "현재 전체 예약현황을 확인할 수 있습니다" class="btn btn-primary btn-block" onClick="location.href='/orderAll/'">전체 예약현황</button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" title = "학과와 교수님 관련 정보를 제공하는 챗봇입니다" class="btn btn-primary btn-block" onClick="location.href='http://pf.kakao.com/_xlxmFSxb'">챗봇<span class="badge rounded-pill bg-light text-dark">카카오톡 친구하기</span></button>
+                </div>
+                <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" data-toggle="popover" onClick="location.href='https://e-onestop.pusan.ac.kr/index?home=home'" data-content="회원가입 후 강의실 예약기능 및 전체현황 확인 기능을 제공합니다.">학생지원시스템<span class="badge rounded-pill bg-light text-dark">Click!</span></button>
+                </div>
+                <!-- <div class="form-group">
+                    <button style="font-weight: bold;" class="btn btn-primary btn-block" data-bs-toggle="popover" title="사이트 이용법" data-bs-content="And here's some amazing content. It's very engaging. Right?">처음 오셨나요?<span class="badge rounded-pill bg-light text-dark">이용방법!</span></button>
+                </div> -->
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 팝오버 위한 함수 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  $( function () {
+    $( '[data-toggle="popover"]' ).popover()
+  } );
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,65 @@
+<html>
+<title>구해줘! 룸즈 : 강의실 예약하기</title>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet"> <!-- 구글폰트 쓰기위함 -->
+    <style>
+        p {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 23px;
+        }
+    </style>    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> <!-- 여기는 기존 부트스트랩이 아니라 제이쿼리 mifinied 링크주소 복사 후 기존교체한거임-->
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    {% block header %} <!-- summernote 들어가는 경우 이용할수있게 그냥 자리하나 만들어준거 ㅇㅇ-->
+    {% endblock %} <!-- 그래서 block 종류를 header와 contents로 나눔 -->
+    {% load static %} <!-- 이미지 파일 등 사용하기 위함-->
+    <link rel="stylesheet" href="{% static 'css.css'%}">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+        <a style="font-family: 'Do Hyeon', sans-serif;" class="navbar-brand" href="/">
+            <img src="{% static 'logo2.png' %}" alt="" width="36" height="30" class="d-inline-block align-text-top">
+            구해줘! 룸즈
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <a style="font-weight: bold;" class="nav-link active" aria-current="page" href="/">홈</a>
+            <a style="font-weight: bold;" class="nav-link" href="/orderAll/">전체현황</a>
+            <a style="font-weight: bold;" class="nav-link" href="/users/agreement/">회원가입</a>
+            <a style="font-weight: bold;" class="nav-link" href="/logout/">로그아웃</a>
+            </div>
+        </div>
+        </div>
+    </nav>
+</head>
+
+<body>
+    {% load mathfilters %}
+    <div class="container">
+        {% block contents %}
+        {% endblock %}
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>
+        alert("{{ message.message }}")
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

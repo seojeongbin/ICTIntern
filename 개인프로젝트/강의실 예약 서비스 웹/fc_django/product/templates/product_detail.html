@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card" style="width: 100%;"> <!-- card, row mt-5 이런거 전부 부트스트랩 전용 속성이다!!-->
+        <div class="card-body"> <!--view에서 설정한 context_object_name = 'product' 이 쓰인듯?-->
+            <h5 style="font-family: 'Do Hyeon', sans-serif;" class="card-title">{{ product.name }}</h5>  <!-- 상품명이 상세보기 페이지에서 제목으로 나온다 -->
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+            <form form method="POST" action="/order/create/">
+                <!-- 존나중요 : 이로써 product의 form을 받는게 아니라 order의 form을 받는것이다! (description은 hidden)-->
+                <!-- 먼저 라벨 나오고, 인풋 나오고 리스트 나오는 순서-->
+                {% csrf_token %}
+                {% for field in form %} <!-- form 내용을 받아서 html로 출력하는 기능 -->
+                <div class="form-group">
+                {% ifnotequal field.name 'product' %} <!-- '상풀설명'인 경우(label = product) 안보이게 해주는 히든기능 구현인듯? -->
+                <label class="font" style="font-weight: bold;" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% endifnotequal %}
+                <input class="font" style="font-weight: bold;" type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                    placeholder="{{ field.label }}" name="{{ field.name }}"
+                    value="{% ifequal field.name 'product' %}{{product.id}}{% endifequal %}" />
+                <!-- 이거 속성중에 value는 product인경우 (보이지않게 처리해준 '상품설명' 의 경우) : 몇번상품이냐에 따라 값을 준거임. 1번상품이면 value=1, 2번상품이면 value=2 이렇게 갖게 해줬다고-->
+                </div>
+                {% if field.errors %}
+                <span style="color: red">{{ field.errors }}</span>
+                {% endif %}
+                {% endfor %}
+                <div style="font-family: 'Do Hyeon', sans-serif;" style="color: blue" class="form group">* 예약시간은 yyyy-mm-dd hh:mm 형태로 입력해주세요 *</div>
+                <div class="row mt-2"></div>
+                <button style="font-weight: bold;" type="submit" class="btn btn-primary">강의실 예약하기</button>
+                <button style="font-weight: bold;" class="btn btn-info"onclick="alert('<예약시간 입력형태>와 <강의실의 현재 혼잡도>를 확인 해주세요')">도움말</button>
+            </form>
+            <!-------------- 삭제버튼을 /form안에 넣으면 action = order/create땜에 작동안된다!!!!! ------------------>
+            <!-- <button style="font-weight: bold;" class="btn btn-danger" onclick="location.href='/product/{{ product.id }}/delete/'">강의실 삭제하기<span class="badge rounded-pill bg-light text-dark">조교님 전용</span></button> -->
+            
+            <button style="font-weight: bold;" class="btn btn-danger" id="detail_btn" data-toggle="modal" data-target="#delete_modal">강의실 삭제하기<span class="badge rounded-pill bg-light text-dark">조교님 전용</span></button>
+            <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 style="font-family: 'Do Hyeon', sans-serif; color: red" class="modal-title">삭제경고</h5>
+                            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">관리자 전용 기능</span>
+                            </button> -->
+                        </div>
+                        <div class="modal-body">
+                            <p>강의실을 삭제하시겠습니까?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button style="font-weight: bold;" onclick="delete_modal()" type="button" class="btn btn-danger">삭제하기</button>
+                            <button style="font-weight: bold;" type="button" class="btn btn-light" data-dismiss="modal">취소하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </li>
+            <li class="list-group-item">강의실 정원: {{ product.price|intcomma }} 명</li> <!-- 뒤에 | ~~ 이거는 humanize 쓴거고 ㅇㅇ -->
+            <li class="list-group-item">등록날짜: {{ product.register_date|date:'Y-m-d H:i' }}</li>
+            <li class="list-group-item">현재 예약가능 인원: {{ product.stock|intcomma }} 명</li>
+            <li class="list-group-item">{{ product.description|safe }}</li>
+        </ul>
+        </div>
+    </div>
+    <!-- 상세보기 페이지 좌측하단에 '목록보기'라는 글자 누르면 글 목록(product.html)로 넘어갈수있게함-->
+<div style="padding-left: 12px;" class="row mt-2">
+    <div class="col-12">
+        <button style="font-weight: bold;" class="btn btn-primary" onClick="location.href='/product/'">목록보기</button>
+    </div>
+</div>
+
+<!---- 강의실 삭제하는 자바스크립트 함수----->
+<script type="text/javascript">
+    // $(document).ready(function () {
+    //     $('img').css('width', '100%');
+    // });
+
+    function delete_modal() {
+        location.replace('/product/{{ product.id }}/delete/');
+    }
+</script>
+
+
+{% endblock %}

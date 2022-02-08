@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-hover">
+        <thead class="thead-primary">
+            <tr>
+            <th scope="col">강의실</th>
+            <th scope="col">이용인원</th>
+            <th scope="col">신청시간</th>
+            <th scope="col">예약시간</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            {% for order in order_list_All %} <!-- view의 order list All로 연결됨-->
+            <tr>
+            <th>{{ order.product }}</th>
+            <th>{{ order.quantity|intcomma }} 명</th>
+            <th>{{ order.register_date|date:'Y-m-d H:i' }}</th>
+            <th>{{ order.date }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-12">
+    <button style="font-weight: bold;" class="btn btn-primary" onClick="location.href='/'">홈으로</button>
+</div>
+{% endblock %}

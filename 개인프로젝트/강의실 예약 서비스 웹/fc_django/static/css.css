@@ -1,0 +1,38 @@
+mark {
+  background-color: #63a4ff;
+
+  color: #004ba0;
+}
+
+.btn-primary {
+  background-color: #63a4ff;
+  border-color: #63a4ff;
+  color: #fff;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  border-color: #63a4ff;
+  background-color: #63a4ff;
+  color: #fff;
+}
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:active:focus,
+.btn-primary:active:hover {
+  border-color: #63a4ff;
+  background-color: #63a4ff;
+  color: #fff;
+}
+
+.img-fluid img-thumbnail {
+  top: 50px;
+  position: absolute;
+}
+
+a.carousel-control {
+  opacity: 0;
+}
+
+span.badge rounded-pill bg-primary {
+  color: #fff;
+}

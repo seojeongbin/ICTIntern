@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load humanize %} <!-- 각종 양식 사용하기위함 -->
+
+<!-------------- 제이쿼리를 사용해서 마우스 갖다대면 정보 나오는 부분인데.. 여기는 그냥 그러려니 하기--------->
+{% block header %}
+<script>
+    function product_detail(id) {
+        $.ajax({
+        url: "/api/product/" + id,
+        success: function (result) {
+            $("#product-" + id).popover({
+            html: true,
+            content: '강의실 정원'+ ':' +result.price +'명'
+            }).popover('show');
+        }
+        });
+    }
+
+    function product_leave(id) {
+        $("#product-" + id).popover('hide');
+    }
+    $(document).ready(function () {});
+</script>
+{% endblock %}
+<!--------------------------------------------------------------------------------------->
+
+{% block contents %}
+<!-- 여유공간 할애해주기 -->
+<div class="row mt-5">
+    <div class="col-12">
+<!-- 표 만들기 ! -->
+        <table class="table table-hover">
+            <thead class="thead-primary">
+                <tr> <!-- 칼럼명 설정부분-->
+                <!-- <th scope="col">예약번호</th> -->
+                <th scope="col">강의실</th>
+                <th scope="col">예약 가능 인원</th>
+                <th scope="col">등록날짜</th>
+                <th scope="col">혼잡도</th>
+                </tr>
+            </thead> <!-- 각 들어갈 행 정보 따오는 부분-->
+            <tbody class="text-dark">
+                {% for product in product_list %} <!-- 실제 데이터베이스에 저장된 product 정보 가져옴-->
+                <tr> <!-- product_list -> views.py 의 context ~ -> model의 Product클래스로 연결됨 ~~ 이런 원리 -->
+                    <!-- <th scope="row">{{ product.id }}</th>
+                    <!-- 여기부분이 마우스 갖다대면 정보 나오게 하는부분!-->
+                    <th><a id="product-{{ product.id }}" onmouseenter="product_detail({{ product.id }});"
+                        onmouseleave="product_leave({{ product.id }});" href="/product/{{ product.id }}">{{ product.name }}</a>
+                    </th><!-- href : 상품명(prpoduct.name)을 누르면 그 상품에 대한 상세페이지로 넘어가게됨-->
+                    <th>{{ product.stock|intcomma }} 명</th> <!-- humanize 적용 : 세단위 , wjrdyd & 끝에 '원 '-->
+                    <th>{{ product.register_date|date:'Y-m-d H:i'  }}</th> <!-- humanize 적용 : 날짜양식 지정-->
+                    <th><span style="color: red">{{ product.congestion }} % </span></th>
+                    <!-- 이거 진짜 많이 알아봤는데 이거는 sql 질의어로 표현하기-->
+                {% endfor %} 
+            </tbody>
+        </table>
+<!-- 표만들기 끝! -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+    <button style="font-weight: bold;" class="btn btn-primary" onClick="location.href='/'">뒤로가기</button>
+    <i><h5 align="right" style="font-family: 'Do Hyeon', sans-serif; color:blue" class="font" style="font-weight: bold;">코로나 거리두기 정책으로 인하여 혼잡도가 100%가 되는경우 부터는 예약기능이 제한됩니다</h5></i>
+</div>    
+{% endblock %}
