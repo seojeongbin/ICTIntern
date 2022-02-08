@@ -1,4 +1,5 @@
 # Plant Simulation 을 이용한 물류배치 최적화
+- 산업공학 전공과목 '시뮬레이션' 프로젝트
 - 사용 프로그램 : https://www.plm.automation.siemens.com/global/ko/products/manufacturing-planning/plant-simulation-throughput-optimization.html
 
 ## 기본규칙
