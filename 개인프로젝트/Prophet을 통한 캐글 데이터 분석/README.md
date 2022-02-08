@@ -1,11 +1,9 @@
-# Forecast Avocado Prices
-Forecast of avocado prices in US market.
+# 시계열 라이브러리 (Prophet) 을 통한 캐글 데이터 분석
 
-![](https://github.com/kairess/forecast_avocado_prices/raw/master/result.png)
+- 아보카도 판매량 예측
 
-## Dependency
-- Python 3
-- [Prophet](https://github.com/facebook/prophet)
+## 사용 기술
+- Prophet (from 페이스북)
 - numpy
 - pandas
 
